@@ -31,13 +31,13 @@ public class BallDemo
 
         // draw the ground
         myCanvas.setForegroundColor(Color.BLACK);
-        myCanvas.drawLine(50, ground, 550, ground);
+        myCanvas.drawLine(50, ground-600, 800, ground-600);
 
         // create and show the balls
-        BouncingBall ball = new BouncingBall(50, 50, 16, Color.BLUE, ground, myCanvas);
-        ball.draw();
-        BouncingBall ball2 = new BouncingBall(70, 80, 20, Color.RED, ground, myCanvas);
-        ball2.draw();
+        //BouncingBall ball = new BouncingBall(50, 50, 16, Color.BLUE, ground, myCanvas);
+        //ball.draw();
+        //BouncingBall ball2 = new BouncingBall(70, 80, 20, Color.RED, ground, myCanvas);
+        //ball2.draw(); this was commented to hide the second ball btw
 
         // make them bounce
         boolean finished =  false;
