@@ -8,6 +8,7 @@ import java.awt.geom.*;
  * upward again when hitting the ground.
  *
  * This movement can be initiated by repeated calls to the "move" method.
+ * Additionally this BoxBall class is made from a copy of BouncingBall
  * 
  * @author Don Santiago
  *
@@ -16,6 +17,13 @@ import java.awt.geom.*;
 
 public class BoxBall
 {
+
+/**
+* we introduce multiple things here to this block
+* introduction of ceilingPosition, leftBounds,rightBounds
+* and xSpeed the private data are things that should not be referrenced by other classes
+* 
+*/
     private static final int GRAVITY = 3;  // effect of gravity
 
     private int ballDegradation = 2;
@@ -42,7 +50,7 @@ public class BoxBall
      * @param groundPos  the position of the ground (where the wall will bounce)
      * 
      * @param ceilingPos the position of the ceiling of the box 
-     * @parem leftBounds the position of the left side of the box
+     * @param leftBounds the position of the left side of the box
      * @param rightBounds the position of the right side of the box
      * 
      * @param drawingCanvas  the canvas to draw this ball on
@@ -56,9 +64,9 @@ public class BoxBall
         color = ballColor;
         diameter = ballDiameter;
         groundPosition = groundPos;
-        ceilingPosition=ceilingPos;
-        leftBounds=leftBoundry;
-        rightBounds=rightBoundry;
+        ceilingPosition = ceilingPos;
+        leftBounds = leftBoundry;
+        rightBounds = rightBoundry;
         
         
         canvas = drawingCanvas;
@@ -107,6 +115,7 @@ public class BoxBall
             yPosition = (int)(groundPosition - diameter);
             ySpeed = -ySpeed + ballDegradation;
         }
+
         if (yPosition <= (ceilingPosition+diameter) && ySpeed > 0){
         
             yPosition = (int)(ceilingPosition+diameter);
@@ -119,6 +128,7 @@ public class BoxBall
             xPosition=(int)(rightBounds-diameter);
             xSpeed=+xSpeed+ballDegradation;
         }
+        
         if (xPosition <= (leftBounds+diameter) && xSpeed > 0){
         
             xPosition=(int)(leftBounds+diameter);
