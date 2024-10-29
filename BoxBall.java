@@ -12,7 +12,7 @@ import java.awt.geom.*;
  * 
  * @author Don Santiago
  *
- * @version 2024.10.15
+ * @version 2024.10.29
  */
 
 public class BoxBall
@@ -26,7 +26,7 @@ public class BoxBall
 */
     private static final int GRAVITY = 3;  // effect of gravity
 
-    private int ballDegradation = 2;
+    private int ballDegradation = 1;
     private Ellipse2D.Double circle;
     private Color color;
     private int diameter;
@@ -38,8 +38,10 @@ public class BoxBall
     private final int rightBounds; //right bounds of box
     private Canvas canvas;
     private int ySpeed = 1;                // initial downward speed
-    private int xSpeed =2; //this was added to give a value to a speed going from along the x axis
+    private int xSpeed =1; //this was added to give a value to a speed going from along the x axis
 
+    
+    
     /**
      * Constructor for objects of class BoxBall
      *
@@ -59,10 +61,10 @@ public class BoxBall
                         int groundPos, int ceilingPos, int leftBoundry,
                         int rightBoundry, Canvas drawingCanvas)
     {
-        xPosition = xPos;
-        yPosition = yPos;
-        color = ballColor;
-        diameter = ballDiameter;
+        xPosition = xPos; //this is the former position of the ball as (X,Y)
+        yPosition = yPos; //this is the latter position of the ball as (X,Y)
+        color = ballColor; //ball color as referenced 
+        diameter = ballDiameter; //size of the ball is based off diameter size
         groundPosition = groundPos;
         ceilingPosition = ceilingPos;
         leftBounds = leftBoundry;
@@ -95,8 +97,8 @@ public class BoxBall
      * in this section we will add a bunch of things here to make sure
      * once we hit one of the wall values we change the direction in the opposite
      * direction by toggling the +/- value 
-     * by the way the reason why we use -diameter is because the "ball" is actually a square
-     * 
+     * by utilizing +-diameter we can ensure that the movement of the ball will only collide from the edge
+     * it will also ensure that it remains inside of the box
      **/
     public void move()
     {
@@ -104,10 +106,9 @@ public class BoxBall
         erase(); //if this comments out it will do one of those cool lapse things
             
         // compute new position
-        ySpeed += GRAVITY;
-        yPosition += ySpeed;
-        xPosition +=xSpeed;
-        xSpeed +=GRAVITY;
+        ySpeed += GRAVITY; //instantiate the effects of gravity
+        yPosition += ySpeed; //change y position
+        xPosition +=xSpeed; //change x position
 
         // check if it has hit the ground otherwise check to see if it has hit the ceiling
         if (yPosition >= (groundPosition - diameter) && ySpeed > 0){ 
@@ -116,23 +117,23 @@ public class BoxBall
             ySpeed = -ySpeed + ballDegradation;
         }
 
-        if (yPosition <= (ceilingPosition+diameter) && ySpeed > 0){
+        if (yPosition <= (ceilingPosition+diameter) && ySpeed < 0){
         
             yPosition = (int)(ceilingPosition+diameter);
-            ySpeed = ySpeed-ballDegradation;
+            ySpeed = ySpeed+ballDegradation;
         }
         
         // check to see if the ball has hit the left side bounds or the right side bounds
         if (xPosition >= (rightBounds - diameter) && xSpeed > 0){
         
             xPosition=(int)(rightBounds-diameter);
-            xSpeed=+xSpeed+ballDegradation;
+            xSpeed=-xSpeed+ballDegradation;
         }
         
-        if (xPosition <= (leftBounds+diameter) && xSpeed > 0){
+        if (xPosition <= (leftBounds+diameter) && xSpeed < 0){
         
             xPosition=(int)(leftBounds+diameter);
-            xSpeed=-xSpeed-ballDegradation;
+            xSpeed=-xSpeed+ballDegradation;
         }
     
 
@@ -154,5 +155,12 @@ public class BoxBall
     public int getYPosition()
     {
         return yPosition;
+    }
+    
+    /**
+     * return the diameter so that it can be used in boxBounce
+     */
+    public int getDiameter(){
+        return diameter;
     }
 }
